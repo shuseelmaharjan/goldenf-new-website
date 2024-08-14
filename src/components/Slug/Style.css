@@ -1,0 +1,10 @@
+/* Target first-level list items in unordered lists */
+.custom-list > ul > li::marker {
+    color: #f29200; /* Change bullet color for top-level unordered list */
+  }
+  
+  /* Target first-level list items in ordered lists */
+  .custom-list > ol > li::marker {
+    color: #f29200; /* Change bullet color for top-level ordered list */
+  }
+  

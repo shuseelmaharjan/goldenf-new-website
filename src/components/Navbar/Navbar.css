@@ -1,0 +1,17 @@
+.sticky-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.sticky-navbar.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sticky-navbar.delay-show {
+    transition-delay: 3s;
+}
