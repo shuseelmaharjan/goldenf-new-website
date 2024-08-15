@@ -44,7 +44,7 @@ const Navbar = () => {
             <Link to="#" className="bg-[#f29200] text-white px-3 py-1 rounded text-[1rem]">
                 <span className='flex items-center'>Apply Online <FaArrowRight style={{marginLeft:'5px'}}/></span>
             </Link>
-            <Link to="#" className="bg-[#f29200] flex items-center space-x-2 text-white px-3 py-1 rounded text-[1rem] hidden md:inline">
+            <Link to="/login" className="bg-[#f29200] flex items-center space-x-2 text-white px-3 py-1 rounded text-[1rem] hidden md:inline">
                 <span className='flex items-center'>Login <FaArrowRight style={{marginLeft:'5px'}}/></span>
             </Link>
             </div>
