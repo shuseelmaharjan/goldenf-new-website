@@ -10,6 +10,7 @@ import Events from './components/Events/Events';
 import Syllabus from './components/Syllabus/Syllabus';
 import Contact from './components/Contact/Contact';
 import CoursesDetails from './components/Slug/CoursesDetails';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path='/syllabus' element={<Syllabus/>}/>
         <Route path='/contact' element={<Contact/>}/>
       </Routes>
+      <Footer/>
     </Router>
     </>
   );

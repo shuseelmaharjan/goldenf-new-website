@@ -1,10 +1,37 @@
-/* Target first-level list items in unordered lists */
 .custom-list > ul > li::marker {
-    color: #f29200; /* Change bullet color for top-level unordered list */
+    color: #f29200; 
   }
   
-  /* Target first-level list items in ordered lists */
-  .custom-list > ol > li::marker {
-    color: #f29200; /* Change bullet color for top-level ordered list */
+.custom-list > ol > li::marker {
+    color: #f29200; 
   }
-  
+
+.custom-list > ul > li > ul > li::marker{
+  color: #333!important;
+}
+
+.custom-list h3{
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0!important;
+  margin-top: 8px;
+}
+.custom-list h4{
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0!important;
+  margin-top: 8px;
+}
+.custom-list p{
+  margin-bottom: 0!important;
+  margin-top: 5px;
+}
+.custom-list li{
+  margin: 0px!important;
+}
+.custom-list ul{
+  margin-top: 0px!important;
+}
+.custom-list strong{
+  font-family: 600;
+}

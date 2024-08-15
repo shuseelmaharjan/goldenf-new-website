@@ -16,6 +16,11 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+  
+  const isActive = (path) => {
+    return location.pathname === path || location.pathname.startsWith(path);
+  };
+
   return (
     <>
     <div className="sticky top-0 transition-all duration-300 ease-in-out z-50">
@@ -59,49 +64,49 @@ const Navbar = () => {
           <div className="hidden md:flex space-x-6 text-[1rem] font-semibold">
             <Link
               to="/"
-              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out hover:bg-[#f9f9f9] ${location.pathname === '/' ? 'text-[#0962c6] border-b-4 border-[#0962c6]' : 'text-black'}`}
+              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out ${location.pathname === '/' ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
             >
               Home
             </Link>
             <Link
               to="/courses"
-              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out hover:bg-[#f9f9f9] ${location.pathname === '/courses' ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
+                className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out ${isActive('/courses') ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
             >
               Courses
             </Link>
             <Link
               to="/languages"
-              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out hover:bg-[#f9f9f9] ${location.pathname === '/languages' ? 'text-[#0962c6] border-b-4 border-[#0962c6]' : 'text-black'}`}
+              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out ${isActive('/languages') ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
             >
               Languages
             </Link>
             <Link
               to="/tuition"
-              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out hover:bg-[#f9f9f9] ${location.pathname === '/tuition' ? 'text-[#0962c6] border-b-4 border-[#0962c6]' : 'text-black'}`}
+              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out ${isActive('/tuition') ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
             >
               Tuition
             </Link>
             <Link
               to="/bridge-course"
-              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out hover:bg-[#f9f9f9] ${location.pathname === '/bridge-course' ? 'text-[#0962c6] border-b-4 border-[#0962c6]' : 'text-black'}`}
+              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out ${isActive('/bridge-course') ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
             >
               Bridge Course
             </Link>
             <Link
               to="/events"
-              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out hover:bg-[#f9f9f9] ${location.pathname === '/events' ? 'text-[#0962c6] border-b-4 border-[#0962c6]' : 'text-black'}`}
+              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out ${isActive('/events') ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
             >
               Events
             </Link>
             <Link
               to="/syllabus"
-              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out hover:bg-[#f9f9f9] ${location.pathname === '/syllabus' ? 'text-[#0962c6] border-b-4 border-[#0962c6]' : 'text-black'}`}
+              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out ${isActive('/syllabus') ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
             >
               Syllabus
             </Link>
             <Link
               to="/contact"
-              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out hover:bg-[#f9f9f9] ${location.pathname === '/contact' ? 'text-[#0962c6] border-b-4 border-[#0962c6]' : 'text-black'}`}
+              className={`hover:text-[#f29200] hover:border-b-4 hover:border-[#f29200] transition-all duration-300 ease-in-out ${isActive('/contact') ? 'text-[#000] border-b-4 border-[#f29200]' : 'text-black'}`}
             >
               Contact
             </Link>
@@ -115,7 +120,7 @@ const Navbar = () => {
           {/* Hamburger Icon */}
           <div className="md:hidden flex items-center">
             <img src={flag} alt="Flag" className="h-10 w-auto mr-2" />
-            <button onClick={toggleMenu} className="text-black focus:outline-none">
+            <button onClick={toggleMenu} className="md:hidden text-black focus:outline-none">
               <svg
                 className="w-6 h-6"
                 fill="none"
