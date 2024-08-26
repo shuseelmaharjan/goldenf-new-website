@@ -145,49 +145,27 @@ const Navbar = () => {
             isOpen ? 'translate-x-0 w-3/4' : 'translate-x-full w-0'
           }`}
         >
-          <div className="flex justify-end p-4">
+          <div className="flex justify-between p-4">
+            <h4>Navigation</h4>
+
             <button onClick={toggleMenu} className="text-black focus:outline-none">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </button>
           </div>
           <div className="flex flex-col p-6 space-y-4">
-            <Link
-              to="/"
-              className="text-black hover:text-gray-600 text-[1rem] font-semibold"
-            >
-              Home
-            </Link>
-            <Link
-              to="/courses"
-              className="text-black hover:text-gray-600 text-[1rem] font-semibold"
-            >
-            Courses
-            </Link>
-            <Link
-              to="/languages"
-              className="text-black hover:text-gray-600 text-[1rem] font-semibold"
-            >
-              Languages
-            </Link>
-            <Link
-              to="/contact"
-              className="text-black hover:text-gray-600 text-[1rem] font-semibold"
-            >
-              Contact
-            </Link>
+            <Link to="/" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${location.pathname === '/' ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Home</Link>
+
+            <Link to="/courses" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/courses') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Courses</Link>
+            <Link to="/languages" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/languages') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Languages</Link>
+            <Link to="/tuiton" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/tuiton') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Tuition</Link>
+            <Link to="/bridge-course" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/bridge-course') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Bridge Course</Link>
+            <Link to="/events" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/events') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Events</Link>
+            <Link to="/syllabus" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/syllabus') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Syllabus</Link>
+            <Link to="/contact" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/contact') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Contact</Link>
+            <br />
+            <Link to="/login" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/login') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Login</Link>
           </div>
         </div>
 

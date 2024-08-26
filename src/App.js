@@ -13,26 +13,50 @@ import CoursesDetails from './components/Slug/CoursesDetails';
 import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
-import Sidebar from './components/Navbar/Sidebar';
 import Exam from './components/Exams/Exam';
 
 function Layout({ children }) {
   const location = useLocation();
   const isLogin = location.pathname === '/login';
-  const isDashboardOrExam = location.pathname === '/dashboard' || location.pathname === '/exam';
+  const isUser = location.pathname === '/dashboard' || location.pathname === '/exam';
+  const isGuest = location.pathname === '/' ||
+                  location.pathname === '/courses'||
+                  location.pathname === '/courses/:slug'||
+                  location.pathname === '/languages'||
+                  location.pathname === '/tuition'||
+                  location.pathname === '/bridge-course'||
+                  location.pathname === '/events'||
+                  location.pathname === '/syllabus'||
+                  location.pathname === '/contact'
+                  ;
+  
+  const token = localStorage.getItem('token');
+
+  const isAuthenticated = token;
 
   return (
     <>
-      {!isLogin && !isDashboardOrExam && (
+      {isGuest &&(
         <>
           <Navbar />
+          <div>{children}</div>
           <Footer />
         </>
       )}
 
-      {isDashboardOrExam && <Sidebar />}
+      {isAuthenticated && isUser && (
+        <>
+          {children}
+        </>
+      )}
 
-      <div>{children}</div>
+      {isLogin &&(
+        <>
+        <Login/>
+        </>
+      )}
+
+      {!isAuthenticated && isUser && <Navigate to="/login" replace />}
     </>
   );
 }

@@ -1,36 +1,34 @@
 import React, { useState } from 'react';
 import Sidebar from '../Navbar/Sidebar';
-
+import { FaBarsStaggered } from "react-icons/fa6";
+import Username from '../Others/Username';
 
 const Dashboard = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-  
-    const toggleSidebar = () => {
-      setSidebarOpen(!sidebarOpen);
-    };
-  
-    const closeSidebar = () => {
-      setSidebarOpen(false);
-    };
-  
-    return (
-      <div className="flex h-screen bg-gray-100">
-        <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
-        <div className={`flex-1 flex flex-col ${sidebarOpen ? 'ml-[75%]' : 'ml-[20%]'} md:ml-[20%]`}>
-          <header className="bg-white shadow-md p-4 flex items-center justify-between">
-            <button onClick={toggleSidebar} className="md:hidden">
-              <span className="text-2xl">☰</span>
-            </button>
-            <span className="flex-1 text-center">Username</span>
-          </header>
-          <main className="flex-1 p-4">
-            <h1>Dashboard</h1>
-            <p>Welcome to the dashboard!</p>
-          </main>
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className="flex">
+      <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+      <div className="flex-1">
+        {/* Topbar */}
+        <div className="flex justify-between md:justify-end items-center p-4 shadow-md bg-white">
+          <button className="md:hidden p-2 text-black" onClick={toggleSidebar}>
+            <FaBarsStaggered />
+          </button>
+          <Username />
+        </div>
+
+        {/* Main Content */}
+        <div className="p-6">
+          <h1 className="text-2xl font-bold">Dashboard</h1>
         </div>
       </div>
-    );
-  };
-  
-  export default Dashboard;
-  
+    </div>
+  );
+};
+
+export default Dashboard;
