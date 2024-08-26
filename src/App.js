@@ -1,7 +1,6 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
-import Navbar from './components/Navbar/Navbar';
 import Courses from './components/Courses/Courses';
 import Languages from './components/Languages/Languages';
 import Tuition from './components/Tuition/Tuition';
@@ -10,10 +9,10 @@ import Events from './components/Events/Events';
 import Syllabus from './components/Syllabus/Syllabus';
 import Contact from './components/Contact/Contact';
 import CoursesDetails from './components/Slug/CoursesDetails';
-import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import Exam from './components/Exams/Exam';
+<<<<<<< HEAD
 
 function Layout({ children }) {
   const location = useLocation();
@@ -70,6 +69,9 @@ function PrivateRoute({ children }) {
 
   return children;
 }
+=======
+import Layout from './Layout';
+>>>>>>> 12cc450ee4f6a4167033a24919758a8fa2ead19c
 
 function App() {
   return (
@@ -86,8 +88,8 @@ function App() {
           <Route path='/syllabus' element={<Syllabus />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-          <Route path='/exam' element={<PrivateRoute><Exam /></PrivateRoute>} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/exam' element={<Exam />} />
         </Routes>
       </Layout>
     </Router>
