@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Sidebar from '../Navbar/Sidebar';
 import { FaBarsStaggered } from "react-icons/fa6";
 import Username from '../Others/Username';
-const Dashboard = () => {
+
+const ExamHistory = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -23,7 +24,7 @@ const Dashboard = () => {
 
         {/* Main Content */}
         <div className="p-6">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <h1 className="text-2xl font-bold">ExamHistory</h1>
           <div className="container">
             
           </div>
@@ -33,4 +34,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default ExamHistory;

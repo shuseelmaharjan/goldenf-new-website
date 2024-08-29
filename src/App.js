@@ -14,11 +14,18 @@ import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import Exam from './components/Exams/Exam';
+import ExamHistory from './components/ExamHistroy/ExamHistory';
+import Profile from './components/Profile.jsx/Profile';
+import ChangePassword from './components/ChangePassword/ChangePassword';
 
 function Layout({ children }) {
   const location = useLocation();
   const isLogin = location.pathname === '/login';
-  const isUser = location.pathname === '/dashboard' || location.pathname === '/exam';
+  const isUser =  location.pathname === '/dashboard' || 
+                  location.pathname === '/profile' ||
+                  location.pathname === '/change-password' ||
+                  location.pathname === '/exam-history' ||
+                  location.pathname === '/exam';
   const isGuest = location.pathname === '/' ||
                   location.pathname === '/courses'||
                   location.pathname === '/courses/:slug'||
@@ -88,6 +95,11 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path='/exam' element={<PrivateRoute><Exam /></PrivateRoute>} />
+          <Route path='/exam-history' element={<PrivateRoute><ExamHistory /></PrivateRoute>} />
+          <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>} />
+          <Route path='/change-password' element={<PrivateRoute><ChangePassword/></PrivateRoute>} />
+
+
         </Routes>
       </Layout>
     </Router>

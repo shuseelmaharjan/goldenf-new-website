@@ -1,10 +1,36 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import blacklogo from '../../images/blacklogo.webp';
 import whitelogo from '../../images/whitelogo.webp';
+import { FaHome, FaHistory, FaUser, FaLock, FaClipboardList } from "react-icons/fa";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import LogoutConfirmationModal from '../Login/LogoutConfirmationModal';
+import apiClient from '../../apiClient';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLogoutConfirm = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Authentication token not found');
+      }
+
+      await apiClient.post('/user-auth/logout/', {}, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      localStorage.removeItem('token');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <>
@@ -16,7 +42,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
       {/* Sidebar container */}
       <div
-        className={`fixed inset-y-0 left-0 transform shadow-lg overflow-y-auto z-50 w-64 h-screen transition-transform md:relative md:translate-x-0 
+        className={`fixed inset-y-0 left-0 flex flex-col shadow-lg overflow-y-auto z-50 w-64 h-screen transition-transform md:relative md:translate-x-0 
         ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
         bg-white md:bg-gray-900`}
       >
@@ -52,33 +78,64 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </div>
 
         {/* Navigation links */}
-        <nav className="p-4">
+        <nav className="p-4 flex-grow">
           <Link
             to="/dashboard"
-            className={`block py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/dashboard' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-blue-600 hover:text-white`}
+            className={`flex items-center py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/dashboard' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-orange-600 hover:text-white`}
           >
-            Dashboard
+            <FaHome />
+            <span className="mx-2">Dashboard</span>
+          </Link>
+          <Link
+            to="/exam"
+            className={`flex items-center py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/exam' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-orange-600 hover:text-white`}
+          >
+            <FaClipboardList />
+            <span className="mx-2">Exams</span>
+          </Link>
+          <Link
+            to="/exam-history"
+            className={`flex items-center py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/exam-history' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-orange-600 hover:text-white`}
+          >
+            <FaHistory />
+            <span className="mx-2">Exam History</span>
           </Link>
           <Link
             to="/profile"
-            className={`block py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/profile' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-blue-600 hover:text-white`}
+            className={`flex items-center py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/profile' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-orange-600 hover:text-white`}
           >
-            Profile
+            <FaUser />
+            <span className="mx-2">Profile</span>
           </Link>
           <Link
-            to="/settings"
-            className={`block py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/settings' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-blue-600 hover:text-white`}
+            to="/change-password"
+            className={`flex items-center py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/change-password' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-orange-600 hover:text-white`}
           >
-            Settings
-          </Link>
-          <Link
-            to="/logout"
-            className={`block py-2.5 px-4 rounded transition duration-200 ${location.pathname === '/logout' ? 'bg-[#f29200] text-white' : 'text-black md:text-white'} hover:bg-blue-600 hover:text-white`}
-          >
-            Logout
+            <FaLock />
+            <span className="mx-2">Change Password</span>
           </Link>
         </nav>
+
+        {/* Logout Button */}
+        <div className="p-4 mb-10">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center w-full py-2.5 px-4 text-red-600 font-semibold hover:text-red-800 border-t border-black-800 md:border-400 mb-0"
+          >
+            <RiLogoutCircleRLine />
+            <span className='mx-2'>Logout</span>
+          </button>
+        </div>
       </div>
+
+      <LogoutConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={() => {
+          handleLogoutConfirm();
+          setIsModalOpen(false);
+        }}
+      />
     </>
   );
 };
