@@ -14,23 +14,25 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const handleLogoutConfirm = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('Authentication token not found');
+      const refreshToken = localStorage.getItem('refreshToken'); 
+      if (!refreshToken) {
+        throw new Error('Refresh token not found');
       }
-
-      await apiClient.post('/user-auth/logout/', {}, {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
+  
+      await apiClient.post('user-auth/api/logout/', {
+        refreshToken: refreshToken,
       });
-
-      localStorage.removeItem('token');
+  
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+  
+      // Redirect to login page
       navigate('/login');
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
+  
 
   return (
     <>

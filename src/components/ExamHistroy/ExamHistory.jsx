@@ -25,7 +25,7 @@ const ExamHistory = () => {
         {/* Main Content */}
         <div className="p-6">
           <h1 className="text-2xl font-bold">ExamHistory</h1>
-          <div className="container">
+          <div className="flex flex-col h-screen flex-1">
             
           </div>
         </div>

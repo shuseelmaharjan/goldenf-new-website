@@ -37,9 +37,10 @@ function Layout({ children }) {
                   location.pathname === '/contact'
                   ;
   
-  const token = localStorage.getItem('token');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const accessToken = localStorage.getItem('accessToken');
 
-  const isAuthenticated = token;
+  const isAuthenticated = refreshToken && accessToken;
 
   return (
     <>
@@ -69,9 +70,10 @@ function Layout({ children }) {
 }
 
 function PrivateRoute({ children }) {
-  const token = localStorage.getItem('token');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const accessToken = localStorage.getItem('accessToken');
 
-  if (!token) {
+  if (!refreshToken && !accessToken) {
     return <Navigate to="/login" />;
   }
 

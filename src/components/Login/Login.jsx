@@ -20,19 +20,23 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await apiClient.post('user-auth/login/', {
+      const response = await apiClient.post('user-auth/api/login/', {
         username: usernameInput,
         password: password,
       });
-      const { token } = response.data;
-      localStorage.setItem('token', token);
-      
+  
+      const { refreshToken, accessToken } = response.data;
+  
+      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('accessToken', accessToken);
+  
       navigate('/dashboard');
     } catch (error) {
       setError('Invalid username or password.');
       console.error('Login error:', error);
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
