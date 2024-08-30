@@ -5,6 +5,7 @@ import slugify from 'slugify';
 import unknown from '../../images/bgg.jpg';
 import Loader from '../Loader/Loader';
 import { capitalizeWords } from '../Utils/TextUtils';
+import { FaRegClock } from "react-icons/fa6";
 
 const Courses = () => {
     const [courses, setCourses] = useState([]);
@@ -35,7 +36,7 @@ const Courses = () => {
         window.scrollTo(0, 0); 
         const timer = setTimeout(() => {
             setDisplayData(true);
-        }, 500);
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, []);
@@ -73,8 +74,12 @@ const Courses = () => {
                             />
                         </div>
                         <div className="p-4">
-                            <h5 className="text-lg font-semibold text-center mb-2">{capitalizeWords(course.title)}</h5>
-                            <p><strong>Duration:</strong> {capitalizeWords(course.duration)}</p>
+                            <h4 className="text-lg font-semibold h-10 overflow-hidden text-center">{capitalizeWords(course.title)}</h4>
+                            <p className="text-l flex items-center">
+                                <FaRegClock className="mr-1" />
+                                <span className="mx-1 font-semibold">Duration:</span>
+                                {capitalizeWords(course.duration)}
+                            </p>              
                         </div>
                     </Link>
                 ))}
