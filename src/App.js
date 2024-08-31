@@ -89,7 +89,7 @@ function App() {
           <Route path='/courses' element={<Courses />} />
           <Route path='/courses/:slug' element={<CoursesDetails />} />
           <Route path='/languages' element={<Languages />} />
-          <Route path='/tuiton' element={<Tuition />} />
+          <Route path='/tuition' element={<Tuition />} />
           <Route path='/bridge-course' element={<BridgeCourse />} />
           <Route path='/events' element={<Events />} />
           <Route path='/syllabus' element={<Syllabus />} />

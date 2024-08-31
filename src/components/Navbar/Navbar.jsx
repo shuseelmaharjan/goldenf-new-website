@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import flag from '../../images/flag.gif';
 import logo from '../../images/blacklogo.webp';
-import { IoMail } from "react-icons/io5";
-import { FaPhoneAlt } from "react-icons/fa";
+import { IoBookSharp, IoMail } from "react-icons/io5";
+import { FaHome, FaPhoneAlt } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
+import { MdLogin, MdCastForEducation, MdContactMail } from 'react-icons/md';
+import { FaBook, FaLanguage } from 'react-icons/fa6';
+import { ImBooks } from "react-icons/im";
+import { RiMiniProgramFill } from 'react-icons/ri';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -155,17 +159,16 @@ const Navbar = () => {
             </button>
           </div>
           <div className="flex flex-col p-6 space-y-4">
-            <Link to="/" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${location.pathname === '/' ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Home</Link>
-
-            <Link to="/courses" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/courses') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Courses</Link>
-            <Link to="/languages" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/languages') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Languages</Link>
-            <Link to="/tuiton" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/tuiton') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Tuition</Link>
-            <Link to="/bridge-course" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/bridge-course') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Bridge Course</Link>
-            <Link to="/events" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/events') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Events</Link>
-            <Link to="/syllabus" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/syllabus') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Syllabus</Link>
-            <Link to="/contact" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/contact') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Contact</Link>
-            <br />
-            <Link to="/login" className={`text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/login') ? 'text-[#fff] bg-[#f29200]' : 'text-black'}`}>Login</Link>
+            <Link to="/" className={`flex items-center text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${location.pathname === '/' ? 'text-white bg-[#f29200]' : 'text-black'}`}><FaHome/><span className='ml-2'>Home</span></Link>
+            <Link to="/courses" className={`flex items-center text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/courses') ? 'text-white bg-[#f29200]' : 'text-black'}`}><FaBook/><span className='ml-2'>Courses</span></Link>
+            <Link to="/languages" className={`flex items-center text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/languages') ? 'text-white bg-[#f29200]' : 'text-black'}`}><FaLanguage/><span className='ml-2'>Languages</span></Link>
+            <Link to="/tuition" className={`flex items-center text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/tuition') ? 'text-white bg-[#f29200]' : 'text-black'}`}><MdCastForEducation /><span className='ml-2'>Tuition</span></Link>
+            <Link to="/bridge-course" className={`flex items-center text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/bridge-course') ? 'text-white bg-[#f29200]' : 'text-black'}`}><ImBooks/><span className='ml-2'>Bridge Course</span></Link>
+            <Link to="/events" className={`flex items-center text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/events') ? 'text-white bg-[#f29200]' : 'text-black'}`}><RiMiniProgramFill/><span className='ml-2'>Events</span></Link>
+            <Link to="/syllabus" className={`flex items-center text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/syllabus') ? 'text-white bg-[#f29200]' : 'text-black'}`}><IoBookSharp/><span className='ml-2'>Syllabus</span></Link>
+            <Link to="/contact" className={`flex items-center text-black px-2 py-3 hover:text-gray-600 text-[1rem] font-semibold ${isActive('/contact') ? 'text-white bg-[#f29200]' : 'text-black'}`}><MdContactMail/><span className='ml-2'>Contact</span></Link>
+            <div className="mx-auto mt-2 w-full h-1 bg-[#f29200]"></div>
+            <Link to="/login" className={`flex items-center px-2 py-3 text-[1rem] font-semibold hover:text-gray-600 ${isActive('/login') ? 'text-white bg-[#f29200]' : 'text-black'}`}><MdLogin /><span className="ml-2">Login</span></Link>
           </div>
         </div>
 

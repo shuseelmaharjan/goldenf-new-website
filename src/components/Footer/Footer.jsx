@@ -1,4 +1,6 @@
 import React from 'react';
+import { FaPhone } from 'react-icons/fa6';
+import { MdMail } from 'react-icons/md';
 import { Link } from 'react-router-dom'; 
 
 const Footer = () => {
@@ -33,14 +35,14 @@ const Footer = () => {
             <hr className="border-t border-gray-300" />
             <ul className="space-y-2">
               <li className="flex items-center">
-                <i className="fa fa-phone"></i>
+                <FaPhone/>
                 <span className="ml-3 text-gray-700">
                   <a href="tel:+977-01-5108166" className="hover:underline">01-5108166</a>, 
                   <a href="tel:+977-9813940696" className="ml-2 hover:underline">9813940696</a>
                 </span>
               </li>
               <li className="flex items-center">
-                <i className="fa fa-envelope"></i>
+                <MdMail/>
                 <span className="ml-3 text-gray-700">
                   <a href="mailto:goldenfutureinstitute1@gmail.com" className="hover:underline">goldenfutureinstitute1@gmail.com</a>
                 </span>
