@@ -5,7 +5,7 @@ import slugify from 'slugify';
 import unknown from '../../images/bgg.jpg';
 import Loader from '../Loader/Loader';
 import { capitalizeWords } from '../Utils/TextUtils';
-import { FaRegClock } from "react-icons/fa6";
+import { FaRegClock } from "react-icons/fa";
 
 const Courses = () => {
     const [courses, setCourses] = useState([]);
@@ -16,37 +16,30 @@ const Courses = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-              const response = await apiClient.get('/api/computercourses/');
-              const modifiedData = response.data.map(course => {
-                const slug = slugify(course.title, { lower: true });
-                return {
-                  ...course,
-                  slug: slug, 
-                  image: course.image ? `${apiClient.defaults.baseURL}${course.image}` : null
-                };
-              });
-              setCourses(modifiedData);
-              setLoading(false); 
+                const response = await apiClient.get('/api/computercourses/');
+                const modifiedData = response.data.map(course => {
+                    const slug = slugify(course.title, { lower: true });
+                    return {
+                        ...course,
+                        slug: slug, 
+                        image: course.image ? `${apiClient.defaults.baseURL}${course.image}` : null
+                    };
+                });
+                setCourses(modifiedData);
             } catch (error) {
-              console.error('Error fetching data', error);
+                console.error('Error fetching data', error);
+            } finally {
+                setLoading(false); 
+                setDisplayData(true); 
             }
         };
-          
+
         fetchData();
         window.scrollTo(0, 0); 
-        const timer = setTimeout(() => {
-            setDisplayData(true);
-        }, 1000);
-
-        return () => clearTimeout(timer);
     }, []);
 
     if (loading || !displayData) {
-        return (
-            <>
-            <Loader/>
-            </>
-        );
+        return <Loader />;
     }
 
     return (

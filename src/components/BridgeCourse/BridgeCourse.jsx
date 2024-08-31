@@ -8,6 +8,7 @@ const BridgeCourse = () => {
   const [bridgeCourse, setBridgeCourse] = useState([]); 
   const [showDescription, setShowDescription] = useState({});
   const [loading, setLoading] = useState(true);
+  const [adData, setAdData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,12 +22,21 @@ const BridgeCourse = () => {
         });
         setShowDescription(initialShowDescriptionState);
         setLoading(false);
+
+        const adResponse = await apiClient.get('/api/get-random-ads2/');
+        if (adResponse.data) {
+          setAdData(adResponse.data); 
+        }
+        
+        setLoading(false);
+
       } catch (error) {
         console.error('Error fetching data', error);
+      } finally{
+        setLoading(false);
       }
     };
     fetchData();
-    window.scrollTo(0, 0);
   }, []);
 
   const toggleDescription = (id) => {
@@ -39,7 +49,7 @@ const BridgeCourse = () => {
   if (loading) {
     return <Loader />; 
   }
-
+  window.scrollTo(0, 0);
   return (
     <>
       <div className="container mx-auto py-8 px-4">
@@ -62,6 +72,19 @@ const BridgeCourse = () => {
                     </div>
                   )}
                 </div>
+              </div>
+            ))}
+          </div>
+          <div className="w-full lg:w-3/12 mt-6 lg:mt-0 px-4">
+            {adData.map((item) => (
+              <div key={item.id} className="mb-4">
+                <a href={item.link} target="_blank" rel="noopener noreferrer">
+                  <img 
+                    src={`${apiClient.defaults.baseURL}${item.image}`} 
+                    alt={item.title} 
+                    className="w-full rounded-lg shadow-lg" 
+                  />
+                </a>
               </div>
             ))}
           </div>
