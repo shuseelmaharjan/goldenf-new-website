@@ -15,7 +15,7 @@ const Languages = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-              await new Promise(resolve => setTimeout(resolve, 1000));
+              await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate a delay
               const response = await apiClient.get('/api/languagecourses/');
               const modifiedData = response.data.map(language => {
                 const slug = slugify(language.title, { lower: true });
@@ -37,9 +37,7 @@ const Languages = () => {
     }, []);
 
     if (loading) {
-        return (
-            <Loader/>
-        );
+        return <Loader />;
     }
 
     return (
@@ -51,8 +49,8 @@ const Languages = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {languages.map((language, index) => (
                     <Link 
-                        key={index} 
                         to={`/languages/${language.slug}`} 
+                        key={index} 
                         className={`block border rounded-lg overflow-hidden transition-shadow duration-300 ${hoveredIndex === index ? 'shadow-lg' : 'shadow-sm'}`}
                         onMouseEnter={() => setHoveredIndex(index)}
                         onMouseLeave={() => setHoveredIndex(null)}

@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import Courses from './components/Courses/Courses';
@@ -20,33 +20,28 @@ import ChangePassword from './components/ChangePassword/ChangePassword';
 import Downloads from './components/Others/Downloads';
 import ApplyOnline from './components/Form/ApplyOnline';
 import About from './components/Others/About';
-import { LanguageDetails } from './components/Slug/LanguageDetails';
-import { useLocation } from 'react-router-dom';
+import LanguageDetails from './components/Slug/LanguageDetails';
+import SyllabusDetails from './components/Slug/SyllabusDetails';
+import BlogDetails from './components/Slug/BlogDetails';
 
 function Layout({ children }) {
   const location = useLocation();
   const isLogin = location.pathname === '/login';
-  const isUser =  location.pathname === '/dashboard' || 
-                  location.pathname === '/profile' ||
-                  location.pathname === '/change-password' ||
-                  location.pathname === '/exam-history' ||
-                  location.pathname === '/exam';
-  const isGuest = location.pathname === '/' ||
-                  location.pathname === '/courses' ||
-                  location.pathname === '/languages' ||
-                  location.pathname === '/tuition' ||
-                  location.pathname === '/bridge-course' ||
-                  location.pathname === '/events' ||
-                  location.pathname === '/syllabus' ||
-                  location.pathname === '/contact' ||
-                  location.pathname === '/downloads' ||
-                  location.pathname === '/online-application' ||
-                  location.pathname === '/about-us';
   
   const refreshToken = localStorage.getItem('refreshToken');
   const accessToken = localStorage.getItem('accessToken');
-
   const isAuthenticated = refreshToken && accessToken;
+
+  const guestRoutes = [
+    '/', '/courses', '/courses/:slug', '/languages', '/languages/:slug', '/tuition',
+    '/bridge-course', '/events', '/syllabus', '/contact', '/downloads',
+    '/online-application', '/about-us'
+  ];
+
+  const isGuest = guestRoutes.includes(location.pathname) 
+  || location.pathname.startsWith('/languages/') 
+  || location.pathname.startsWith('/courses/')
+  || location.pathname.startsWith('/syllabus/')|| location.pathname.startsWith('/events/');
 
   return (
     <>
@@ -58,19 +53,15 @@ function Layout({ children }) {
         </>
       )}
 
-      {isAuthenticated && isUser && (
+      {isLogin && <Login />}
+
+      {isAuthenticated && !isGuest && (
         <>
           {children}
         </>
       )}
 
-      {isLogin && (
-        <>
-          <Login />
-        </>
-      )}
-
-      {!isAuthenticated && isUser && <Navigate to="/login" replace />}
+      {!isAuthenticated && !isGuest && <Navigate to="/login" replace />}
     </>
   );
 }
@@ -99,12 +90,16 @@ function App() {
           <Route path='/tuition' element={<Tuition />} />
           <Route path='/bridge-course' element={<BridgeCourse />} />
           <Route path='/events' element={<Events />} />
+          <Route path='/events/:slug' element={<BlogDetails />} />
           <Route path='/syllabus' element={<Syllabus />} />
+          <Route path='/syllabus/:slug' element={<SyllabusDetails />} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/login' element={<Login />} />
           <Route path='/downloads' element={<Downloads />} />
           <Route path='/online-application' element={<ApplyOnline />} />
           <Route path='/about-us' element={<About />} />
+
+          <Route path='/login' element={<Login />} />
+
           <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
           <Route path='/exam' element={<PrivateRoute><Exam /></PrivateRoute>} />
           <Route path='/exam-history' element={<PrivateRoute><ExamHistory /></PrivateRoute>} />
