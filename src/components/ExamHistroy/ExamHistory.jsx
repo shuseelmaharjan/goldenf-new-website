@@ -11,7 +11,7 @@ const ExamHistory = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="md:flex">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <div className="flex-1">
         {/* Topbar */}
@@ -22,11 +22,25 @@ const ExamHistory = () => {
           <Username />
         </div>
 
-        {/* Main Content */}
-        <div className="p-6">
-          <h1 className="text-2xl font-bold">ExamHistory</h1>
-          <div className="flex flex-col h-screen flex-1">
-            
+        <div className="container my-6">
+          <h1 className="text-2xl font-bold mb-6">Exam History</h1>
+          <div className="overflow-x-auto">
+          <table className="min-w-full bg-white shadow-md rounded-lg border border-gray-100">
+          <thead className="border-b-2 border-gray-600">
+                <tr className="bg-white text-gray-800 text-sm font-bold">
+                  <th className="px-6 py-3 text-left">S.N.</th>
+                  <th className="px-6 py-3 text-left">Exam Date</th>
+                  <th className="px-6 py-3 text-left">Status</th>
+                  <th className="px-6 py-3 text-left">Score</th>
+                  <th className="px-6 py-3 text-left">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+   
+                </tbody>
+
+            </table>
           </div>
         </div>
       </div>

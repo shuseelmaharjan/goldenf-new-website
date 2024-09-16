@@ -99,8 +99,8 @@ const Dashboard = () => {
               <FaDollarSign className="text-3xl mr-4" />
               <div>
                 <h2 className="text-lg font-bold">Due Fees</h2>
-                <p className="text-xl">{dueFees}</p>
-              </div>
+                <p className="text-xl">{dueFees > 0 ? dueFees : 0}</p>
+                </div>
             </div>
           </div>
         </div>
