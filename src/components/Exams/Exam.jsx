@@ -4,6 +4,8 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import Username from '../Others/Username';
 import { Link } from 'react-router-dom';
 import apiClient from '../../apiClient';
+import { formatDate } from '../Utils/TextUtils';
+
 const Exam = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [examSchedules, setExamSchedules] = useState([]);
@@ -111,21 +113,6 @@ const Exam = () => {
       console.error('Error checking result:', error);
     }
   };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const today = new Date();
-
-    if (date.toDateString() === today.toDateString()) {
-      const options = { hour12: true, hour: 'numeric', minute: 'numeric' };
-      const time = date.toLocaleTimeString('en-US', options);
-      return `Today at ${time}`;
-    } else {
-      const options = { month: 'long', day: 'numeric', year: 'numeric', hour12: true, hour: 'numeric', minute: 'numeric' };
-      return date.toLocaleDateString('en-US', options);
-    }
-  };
-
   return (
     <div className="md:flex">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />

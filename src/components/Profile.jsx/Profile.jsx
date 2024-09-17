@@ -68,7 +68,7 @@ const Profile = () => {
           <Username />
         </div>
 
-        <div className="container my-6">
+        <div className="p-6">
           <h1 className="text-2xl font-bold mb-6">Profile</h1>
           <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 mb-6">
             <img
@@ -76,8 +76,8 @@ const Profile = () => {
               alt="Profile"
               className="w-32 h-32 object-cover rounded-full border border-gray-300"
             />
-            <div className="space-y-1">
-              <p className="text-xl font-bold mb-3">{user.full_name}</p>
+            <div className="space-y-1 md:ml-6">
+              <p className="text-xl font-bold mb-3 md:text-left text-center">{user.full_name}</p>
               <p className="text-lg font-semibold">Username: <span className="font-normal">{user.username}</span></p>
               <p className="text-lg font-semibold">Email: <span className="font-normal">{user.email}</span></p>
               <p className="text-lg font-semibold">Phone: <span className="font-normal">{user.phone}</span></p>

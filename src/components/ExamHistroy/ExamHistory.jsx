@@ -1,15 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../Navbar/Sidebar';
 import { FaBarsStaggered } from "react-icons/fa6";
 import Username from '../Others/Username';
+import { formatDate } from '../Utils/TextUtils';
+import apiClient from '../../apiClient';
 
 const ExamHistory = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userId, setUserId] = useState('');
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+
+  useEffect(()=>{
+    const fetchUserData = async () => { 
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+  
+        if (!accessToken) {
+          console.error('No access token found');
+          return;
+        }
+  
+        const response = await apiClient.get('user-auth/user-detail/', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setUserId(response.data.id);
+        console.log(response.data.id);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    fetchUserData();
+
+    
+  });
   return (
     <div className="md:flex">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
@@ -22,7 +52,7 @@ const ExamHistory = () => {
           <Username />
         </div>
 
-        <div className="container my-6">
+        <div className="p-6">
           <h1 className="text-2xl font-bold mb-6">Exam History</h1>
           <div className="overflow-x-auto">
           <table className="min-w-full bg-white shadow-md rounded-lg border border-gray-100">

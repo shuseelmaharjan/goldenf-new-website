@@ -150,7 +150,7 @@ const ChangePassword = () => {
         </div>
 
         {/* Main Content */}
-        <div className="container my-6">
+        <div className="p-6">
           <h1 className="text-2xl font-bold mb-4">Change Password</h1>
           <div className="w-full mx-auto bg-white rounded-md">
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4">
