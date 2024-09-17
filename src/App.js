@@ -23,6 +23,7 @@ import About from './components/Others/About';
 import LanguageDetails from './components/Slug/LanguageDetails';
 import SyllabusDetails from './components/Slug/SyllabusDetails';
 import BlogDetails from './components/Slug/BlogDetails';
+import KoreanLanguage from './components/Exams/KoreanLanguage';
 
 function Layout({ children }) {
   const location = useLocation();
@@ -105,6 +106,7 @@ function App() {
           <Route path='/exam-history' element={<PrivateRoute><ExamHistory /></PrivateRoute>} />
           <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path='/change-password' element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
+          <Route path='/exam/koreanmocktest' element={<PrivateRoute><KoreanLanguage/></PrivateRoute>}/>
         </Routes>
       </Layout>
     </Router>
