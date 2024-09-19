@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import apiClient from '../../apiClient';
 import unknown from '../../images/unknown.gif';
-import { capitalizeWords } from '../Utils/TextUtils';
+import { capitalizeWords } from '../../utils/TextUtils';
 import { FaRegClock } from "react-icons/fa6";
 import { CoursesLoader } from '../Loader/CoursesLoader';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";

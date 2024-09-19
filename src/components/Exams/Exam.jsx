@@ -2,53 +2,35 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../Navbar/Sidebar';
 import { FaBarsStaggered } from "react-icons/fa6";
 import Username from '../Others/Username';
-import { Link } from 'react-router-dom';
 import apiClient from '../../apiClient';
-import { formatDate } from '../Utils/TextUtils';
+import { useNavigate } from "react-router-dom";
+import useUserConfig from "../../config/UserConfig";
+import {formatDate} from "../../utils/TextUtils";
 
 const Exam = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [examSchedules, setExamSchedules] = useState([]);
-  const [examExist, setExamExist] = useState({});
-  const [modalShow, setModalShow] = useState(false);
-  const [modalContent, setModalContent] = useState({});
-  const [userId, setUserId] = useState('');
-  const [selectedExamId, setSelectedExamId] = useState(null);
-  const [selectedSetId, setSelectedSetId] = useState(null);
+  const [examSlug, setExamSlug] = useState('');
+  const [examId, setExamId] = useState('');
+  const [setId, setSetId] = useState('');
 
+  const navigate = useNavigate();
+  const { userID } = useUserConfig();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-
   useEffect(() => {
-    const fetchUserData = async () => { 
-      try {
-        const accessToken = localStorage.getItem('accessToken');
-  
-        if (!accessToken) {
-          console.error('No access token found');
-          return;
-        }
-  
-        const response = await apiClient.get('user-auth/user-detail/', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        setUserId(response.data.id);
-      } catch (error) {
-        console.error('Error fetching user details:', error);
-      }
-    };
-
-    fetchUserData();
-
     const fetchExamSchedules = async () => {
       try {
-        const response = await apiClient.get('/api/ongoing-exam-schedules/');
+        const response = await apiClient.get('api/ongoing-exam-schedules/');
         setExamSchedules(response.data);
+        if (response.data.length > 0) {
+          setExamSlug(response.data[0].slug);
+          setSetId(response.data[0].set.id);
+          setExamId(response.data[0].id);
+        }
       } catch (error) {
         console.error('Error fetching exam schedules:', error);
       }
@@ -59,60 +41,23 @@ const Exam = () => {
     return () => {};
   }, []);
 
+  const handleJoinExam = async () => {
+    if (!examSlug || !examId || !setId) return;
 
-  useEffect(() => {
-    const fetchExamExist = async () => {
-      try {
-        if (userId) {
-          await Promise.all(
-            examSchedules.map(async (exam) => {
-              const response = await apiClient.get(`/api/check-attempt-exam/${exam.id}/${userId}/`);
-              setExamExist((prevState) => ({
-                ...prevState,
-                [exam.id]: response.data.exists,
-              }));
-            })
-          );
-        }
-      } catch (error) {
-        console.error('Error fetching data', error);
-      }
-    };
-    fetchExamExist();
-  }, [examSchedules, userId]);
-
-
-  const handleJoinExam = async (examId, setId, True) => {
     try {
-      await apiClient.post('/api/modal/exam-join/', {
+      const data = {
         exam: examId,
         set: setId,
-        user: userId,
-        is_active: True,
-      });
+        user: userID,
+      };
+
+      await apiClient.post('api/modal/exam-join/', data);
+      navigate(`/exam/${examSlug}`);
     } catch (error) {
-      console.error('Error joining exam:', error);
+      console.error("Error joining exam:", error);
     }
   };
 
-  const handleCheckResult = async (examId, setId, userId) => {
-    try {
-      const [validateResponse, modalDateResponse] = await Promise.all([
-        apiClient.get(`/api/validate_answer/${examId}/${setId}/${userId}/`),
-        apiClient.get(`/api/modal-date/${userId}/${setId}/${examId}/`)
-      ]);
-
-      setModalContent({
-        validateResponse: validateResponse.data,
-        modalDateResponse: modalDateResponse.data
-      });
-      setSelectedExamId(examId);
-      setSelectedSetId(setId);
-      setModalShow(true);
-    } catch (error) {
-      console.error('Error checking result:', error);
-    }
-  };
   return (
     <div className="md:flex">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
@@ -133,6 +78,7 @@ const Exam = () => {
                 <tr className="bg-white text-gray-800 text-sm font-bold">
                   <th className="px-6 py-3 text-left">S.N.</th>
                   <th className="px-6 py-3 text-left">Scheduled At</th>
+                  <th className="px-6 py-3 text-left">Exam Slug</th>
                   <th className="px-6 py-3 text-left">Exam Status</th>
                   <th className="px-6 py-3 text-left">Actions</th>
                 </tr>
@@ -141,7 +87,7 @@ const Exam = () => {
                 {examSchedules.length === 0 ? (
                   <>
                   <tr>
-                    <td colSpan={4} className='text-center px-6 py-4 text-sm text-gray-800'>No exams has scheduled currently, try after some time.</td>
+                    <td colSpan={4} className='text-center px-6 py-4 text-sm text-gray-800'>No exams has scheduled currently.</td>
                   </tr>
                   </>
 
@@ -151,6 +97,7 @@ const Exam = () => {
                     <tr key={index} className="border-b hover:bg-gray-100">
                       <td className="px-6 py-4 text-sm text-gray-800">{index + 1}</td>
                       <td className="px-6 py-4 text-sm text-gray-800">{formatDate(exam.schedule_date)}</td>
+                      <td className="px-6 py-4 text-sm text-gray-800">{examSlug}</td>
                       <td className="px-6 py-4 text-sm">
                         <span
                           className={`inline-block px-3 py-1.5 text-xs font-medium rounded-md ${
@@ -167,21 +114,14 @@ const Exam = () => {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-800">
-                        {examExist[exam.id] ? (
-                          <button
-                            className="bg-blue-700 text-white px-3 py-1.5 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50"
-                            onClick={() => handleCheckResult(exam.id, exam.set.id, userId)}
-                          >
-                            Check Result
-                          </button>
-                        ) : (
+
                           <button
                             className="bg-green-700 text-white px-3 py-1.5 rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50"
-                            onClick={() => handleJoinExam(exam.id, exam.set.id, true)}
+                            onClick={() => handleJoinExam(exam.slug)}
                           >
                             Join Now
                           </button>
-                        )}
+
                       </td>
                     </tr>
                   ))}

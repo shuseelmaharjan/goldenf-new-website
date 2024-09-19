@@ -4,7 +4,7 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import Username from '../Others/Username';
 import defaultImage from '../../images/bgg.jpg';
 import apiClient from '../../apiClient';
-import { capitalizeWords } from '../Utils/TextUtils';
+import { capitalizeWords } from '../../utils/TextUtils';
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false);

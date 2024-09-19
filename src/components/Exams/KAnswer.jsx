@@ -8,8 +8,10 @@ const KAnswer = ({ setId, qn, examId }) => {
   useEffect(() => {
     const fetchQuestionData = async () => {
       try {
-        const response = await apiClient.get(`api/questions/${setId}/${qn}/`);
-        setQuestionData(response.data[0]);
+        const response = await apiClient.get(`api/fetch-question/${setId}/${qn}/`);
+        console.log("setId: " + setId + ", Question No.: "+ qn);
+        setQuestionData(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching question data:', error);
       }
@@ -52,14 +54,15 @@ const KAnswer = ({ setId, qn, examId }) => {
               {questionData.answer_type === 'text' && <span>{option.text}</span>}
               {questionData.answer_type === 'image' && option.image && (
                 <img
-                  src={option.image}
+
+                    src={`${apiClient.defaults.baseURL}${option.image}`}
                   alt={`Option ${option.label}`}
                   className="w-full h-auto object-contain"
                 />
               )}
               {questionData.answer_type === 'audio' && option.audio && (
                 <audio controls className="w-full">
-                  <source src={option.audio} type="audio/mp3" />
+                  <source src={`${apiClient.defaults.baseURL}${option.audio}`} type="audio/mp3" />
                   Your browser does not support the audio element.
                 </audio>
               )}

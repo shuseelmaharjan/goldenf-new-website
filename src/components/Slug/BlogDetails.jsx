@@ -3,7 +3,7 @@ import apiClient from '../../apiClient';
 import { Link, useParams } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import defaultImage from '../../images/bgg.jpg'; 
-import { capitalizeWords } from '../Utils/TextUtils';
+import { capitalizeWords } from '../../utils/TextUtils';
 import './Style.css';
 import { FaFacebookF } from "react-icons/fa";
 import { GrAttachment } from "react-icons/gr";

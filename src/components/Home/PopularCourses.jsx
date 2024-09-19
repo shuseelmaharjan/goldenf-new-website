@@ -4,7 +4,7 @@ import apiClient from '../../apiClient';
 import unknown from '../../images/unknown.gif';
 import { PopularCourseLoader } from '../Loader/PopularCourseLoader';
 import { FaRegClock } from "react-icons/fa6";
-import { capitalizeWords } from '../Utils/TextUtils';
+import { capitalizeWords } from '../../utils/TextUtils';
 
 export const PopularCourses = () => {
   const [courses, setCourses] = useState([]);

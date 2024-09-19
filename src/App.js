@@ -106,7 +106,7 @@ function App() {
           <Route path='/exam-history' element={<PrivateRoute><ExamHistory /></PrivateRoute>} />
           <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path='/change-password' element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
-          <Route path='/exam/koreanmocktest' element={<PrivateRoute><KoreanLanguage/></PrivateRoute>}/>
+          <Route path='/exam/:slug' element={<PrivateRoute><KoreanLanguage/></PrivateRoute>}/>
         </Routes>
       </Layout>
     </Router>

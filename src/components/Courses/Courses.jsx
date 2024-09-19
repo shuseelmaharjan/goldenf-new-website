@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import slugify from 'slugify'; 
 import unknown from '../../images/bgg.jpg';
 import Loader from '../Loader/Loader';
-import { capitalizeWords } from '../Utils/TextUtils';
+import { capitalizeWords } from '../../utils/TextUtils';
 import { FaRegClock } from "react-icons/fa";
 
 const Courses = () => {

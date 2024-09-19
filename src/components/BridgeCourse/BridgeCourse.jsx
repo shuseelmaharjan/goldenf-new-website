@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import apiClient from '../../apiClient';
 import Loader from '../Loader/Loader';
-import { capitalizeWords } from '../Utils/TextUtils';
+import { capitalizeWords } from '../../utils/TextUtils';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 
 const BridgeCourse = () => {

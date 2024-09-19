@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../../apiClient';
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import { capitalizeWords } from '../Utils/TextUtils';
+import { capitalizeWords } from '../../utils/TextUtils';
 import Loader from '../Loader/Loader';
 
 const Tuition = () => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import apiClient from '../../apiClient';
 import Loader from '../Loader/Loader';
-import { capitalizeWords } from '../Utils/TextUtils';
+import { capitalizeWords } from '../../utils/TextUtils';
 
 const Syllabus = () => {
   const [syllabusItems, setSyllabusItems] = useState([]);

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '../Navbar/Sidebar';
 import { FaBarsStaggered } from "react-icons/fa6";
 import Username from '../Others/Username';
-import { formatDate } from '../Utils/TextUtils';
 import apiClient from '../../apiClient';
 
 const ExamHistory = () => {
