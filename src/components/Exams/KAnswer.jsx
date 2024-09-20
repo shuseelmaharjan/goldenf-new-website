@@ -1,35 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../../apiClient';
-import useUserConfig from "../../config/UserConfig";
+import { FaPlay, FaPause } from 'react-icons/fa';
 
 const KAnswer = ({ setId, qn, examId, userId }) => {
   const [questionData, setQuestionData] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
-
-  const { userID } = useUserConfig();
+  const [playingAudio, setPlayingAudio] = useState(null);
+  const [playCount, setPlayCount] = useState({}); // Track play counts for each audio option
 
   useEffect(() => {
     const fetchQuestionData = async () => {
       try {
-        const response = await apiClient.get(`api/fetch-question/${setId}/${qn}/`);
-        console.log("setId: " + setId + ", Question No.: " + qn);
-        setQuestionData(response.data);
-        console.log(response.data);
+        const questionResponse = await apiClient.get(`api/fetch-question/${setId}/${qn}/`);
+        setQuestionData(questionResponse.data);
+
+        const answerResponse = await apiClient.get(`api/getAnswer/${examId}/${userId}/qn${qn}/`);
+        const answerValue = answerResponse.data[`qn${qn}`];
+
+        if (answerValue) {
+          setSelectedOption(answerValue.toUpperCase());
+        } else {
+          setSelectedOption(null);
+        }
       } catch (error) {
-        console.error('Error fetching question data:', error);
+        console.error('Error fetching question data or answer:', error);
       }
     };
 
     fetchQuestionData();
-  }, [setId, qn]);
+  }, [setId, qn, examId, userId]);
 
-  const updateAnswer = async (label) => {
-    const columnName = `qn${qn}`; // Determine the column name based on the question number
+  const updateAnswer = async (qn, label) => {
+    const columnName = `qn${qn}`;
     try {
-      const response = await apiClient.patch(`api/modal/${examId}/${userID}/`, {
-        [columnName]: label, // Dynamically set the column name
+      await apiClient.post(`api/submit-answer/${examId}/${userId}/`, {
+        [columnName]: label,
       });
-      console.log('Answer updated:', response.data);
     } catch (error) {
       console.error('Error updating answer:', error);
     }
@@ -37,7 +43,23 @@ const KAnswer = ({ setId, qn, examId, userId }) => {
 
   const handleOptionClick = (label) => {
     setSelectedOption(label);
-    updateAnswer(label); // Call the update function here
+    updateAnswer(qn, label);
+  };
+
+  const toggleAudio = (audioSrc, label) => {
+    const currentPlayCount = playCount[label] || 0;
+
+    if (currentPlayCount < 3) {
+      const audio = new Audio(audioSrc);
+      audio.play();
+      setPlayingAudio(audio);
+      setPlayCount(prev => ({ ...prev, [label]: currentPlayCount + 1 }));
+
+      // Pause audio when it ends
+      audio.onended = () => {
+        setPlayingAudio(null);
+      };
+    }
   };
 
   if (!questionData) return <p>Loading...</p>;
@@ -58,24 +80,25 @@ const KAnswer = ({ setId, qn, examId, userId }) => {
               <div className="flex items-center gap-4">
                 <p className="font-bold">{option.label}</p>
                 <button
-                    className={`flex-grow p-2 text-black rounded border border-gray-500 ${
-                        selectedOption === option.label ? 'bg-blue-800 text-white' : 'bg-transparent'
-                    }`}
+                    className={`flex-grow p-2 text-black rounded border border-gray-500 ${selectedOption === option.label ? 'bg-blue-800 text-white' : 'bg-transparent'}`}
                     onClick={() => handleOptionClick(option.label)}
                 >
                   {questionData.answer_type === 'text' && <span>{option.text}</span>}
-                  {questionData.answer_type === 'image' && option.image && (
-                      <img
-                          src={`${apiClient.defaults.baseURL}${option.image}`}
-                          alt={`Option ${option.label}`}
-                          className="w-full h-auto object-contain"
-                      />
-                  )}
                   {questionData.answer_type === 'audio' && option.audio && (
-                      <audio controls className="w-full">
-                        <source src={`${apiClient.defaults.baseURL}${option.audio}`} type="audio/mp3" />
-                        Your browser does not support the audio element.
-                      </audio>
+                      <div className="flex flex-col">
+                        <button
+                            onClick={() => toggleAudio(`${apiClient.defaults.baseURL}${option.audio}`, option.label)}
+                            className="flex items-center space-x-2"
+                            disabled={playCount[option.label] >= 2} // Disable if played twice
+                        >
+                          {playingAudio && playingAudio.src === `${apiClient.defaults.baseURL}${option.audio}` ? (
+                              <FaPause className="text-xl" />
+                          ) : (
+                              <FaPlay className="text-xl" />
+                          )}
+                          <span>Select this option</span>
+                        </button>
+                      </div>
                   )}
                 </button>
               </div>
